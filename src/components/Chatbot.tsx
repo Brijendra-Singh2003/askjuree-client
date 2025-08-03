@@ -2,6 +2,10 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Loader2 } from "lucide-react";
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
 import { sendMessage } from "@/api/stream";
 
 interface Message {
@@ -9,7 +13,6 @@ interface Message {
   content: string;
   timestamp: Date;
 }
-
 const Chatbot: React.FC = () => {
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -67,8 +70,14 @@ const Chatbot: React.FC = () => {
     setMessages((prev) => [...prev, assistantMessage]);
 
     try {
+      // Create conversation history including the new user message
+      const conversationHistory = [...messages, userMessage].map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
+
       await sendMessage(
-        currentMessage,
+        conversationHistory,
         (data: string) => {
           setMessages((prev) => {
             const newMessages = [...prev];
@@ -162,8 +171,104 @@ const Chatbot: React.FC = () => {
                     : "bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700"
                 }`}
               >
-                <div className="whitespace-pre-wrap break-words">
-                  {message.content}
+                <div className="break-words">
+                  {message.role === "user" ? (
+                    <div className="whitespace-pre-wrap">{message.content}</div>
+                  ) : (
+                    <div className="prose prose-sm max-w-none dark:prose-invert prose-p:my-2 prose-pre:my-2 prose-code:text-sm prose-headings:my-2">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                        code({ node, inline, className, children, ...props }) {
+                          const match = /language-(\w+)/.exec(className || '');
+                          return !inline && match ? (
+                            <SyntaxHighlighter
+                              style={oneDark}
+                              language={match[1]}
+                              PreTag="div"
+                              className="rounded-md !mt-2 !mb-2"
+                              {...props}
+                            >
+                              {String(children).replace(/\n$/, '')}
+                            </SyntaxHighlighter>
+                          ) : (
+                            <code
+                              className="bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded text-sm font-mono"
+                              {...props}
+                            >
+                              {children}
+                            </code>
+                          );
+                        },
+                        blockquote({ children }) {
+                          return (
+                            <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic my-2">
+                              {children}
+                            </blockquote>
+                          );
+                        },
+                        table({ children }) {
+                          return (
+                            <div className="overflow-x-auto my-2">
+                              <table className="min-w-full border-collapse border border-gray-300 dark:border-gray-600">
+                                {children}
+                              </table>
+                            </div>
+                          );
+                        },
+                        th({ children }) {
+                          return (
+                            <th className="border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 px-3 py-2 text-left font-semibold">
+                              {children}
+                            </th>
+                          );
+                        },
+                        td({ children }) {
+                          return (
+                            <td className="border border-gray-300 dark:border-gray-600 px-3 py-2">
+                              {children}
+                            </td>
+                          );
+                        },
+                        a({ href, children }) {
+                          return (
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 dark:text-blue-400 hover:underline"
+                            >
+                              {children}
+                            </a>
+                          );
+                        },
+                        ul({ children }) {
+                          return <ul className="list-disc list-inside my-2 space-y-1">{children}</ul>;
+                        },
+                        ol({ children }) {
+                          return <ol className="list-decimal list-inside my-2 space-y-1">{children}</ol>;
+                        },
+                        li({ children }) {
+                          return <li className="ml-2">{children}</li>;
+                        },
+                        h1({ children }) {
+                          return <h1 className="text-xl font-bold my-3">{children}</h1>;
+                        },
+                        h2({ children }) {
+                          return <h2 className="text-lg font-bold my-2">{children}</h2>;
+                        },
+                        h3({ children }) {
+                          return <h3 className="text-base font-bold my-2">{children}</h3>;
+                        },
+                        p({ children }) {
+                          return <p className="my-2 leading-relaxed">{children}</p>;
+                        },
+                      }}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+                    </div>
+                  )}
                   {message.role === "assistant" &&
                     isLoading &&
                     index === messages.length - 1 && (
