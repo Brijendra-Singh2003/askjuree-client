@@ -11,7 +11,6 @@ import { sendMessage } from "@/api/stream";
 interface Message {
   role: "user" | "assistant";
   content: string;
-  timestamp: Date;
 }
 const Chatbot: React.FC = () => {
   const [userInput, setUserInput] = useState("");
@@ -57,7 +56,6 @@ const Chatbot: React.FC = () => {
     const userMessage: Message = {
       role: "user",
       content: currentMessage,
-      timestamp: new Date(),
     };
     setMessages((prev) => [...prev, userMessage]);
 
@@ -65,16 +63,12 @@ const Chatbot: React.FC = () => {
     const assistantMessage: Message = {
       role: "assistant",
       content: "",
-      timestamp: new Date(),
     };
     setMessages((prev) => [...prev, assistantMessage]);
 
     try {
       // Create conversation history including the new user message
-      const conversationHistory = [...messages, userMessage].map((msg) => ({
-        role: msg.role,
-        content: msg.content,
-      }));
+      const conversationHistory = [...messages, userMessage];
 
       await sendMessage(
         conversationHistory,
@@ -131,7 +125,7 @@ const Chatbot: React.FC = () => {
       <div className="h-dvh flex flex-col">
         {/* Messages Area */}
         <div className="flex-1 w-full overflow-y-auto scrollbar space-y-4">
-          <div className="max-w-3xl mx-auto pt-20 px-4 pb-4">
+          <div className="max-w-3xl mx-auto pt-20 px-4 pb-4 space-y-2">
             {messages.length === 0 && (
               <div className="text-center text-muted-foreground mt-8">
                 <Bot className="w-12 h-12 mx-auto mb-4" />
@@ -190,12 +184,6 @@ const Chatbot: React.FC = () => {
                             ></div>
                           </div>
                         )}
-                    </div>
-                    <div className={`text-xs mt-1 text-muted-foreground`}>
-                      {message.timestamp.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
                     </div>
                   </div>
                 </div>
