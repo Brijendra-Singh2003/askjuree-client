@@ -65,7 +65,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flexc justify-center">
-      <div className=" p-4 lg:p-8w-full max-w-4xl rounded-2xl">
+      <div className="p-4 lg:p-8 w-full max-w-4xl rounded-2xl">
         <div className="p-4">
           <h3 className="p-2 text-center text-2xl md:text-3xl">
             Upload Your Offer Letter
