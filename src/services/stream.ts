@@ -1,10 +1,12 @@
+import { BACKEND_URL } from "@/lib/constants";
+
 export const sendMessage = async (
     messages: Array<{ role: "user" | "assistant", content: string }>, 
     onData: (data: string) => void,
     onComplete: () => void
 ) => {
     try {
-        const response = await fetch('http://localhost:8000/api/stream', {
+        const response = await fetch(`${BACKEND_URL}/api/stream`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

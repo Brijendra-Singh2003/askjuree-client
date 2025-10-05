@@ -46,7 +46,6 @@ const Home: React.FC = () => {
       <div className="p-4 flex items-center justify-center">
         <Link
           href="/chat"
-          target="_blank"
           className="px-6 py-3 bg-primary text-primary-foreground flex items-center justify-center gap-2 border hover:bg-primary/95 rounded-full"
         >
           <span>Chat</span>

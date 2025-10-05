@@ -6,7 +6,8 @@ import { Send, Bot, Loader2, BotIcon } from "lucide-react";
 // import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 // import remarkGfm from "remark-gfm";
-import { sendMessage } from "@/api/stream";
+import { sendMessage } from "@/services/stream";
+import Link from "next/link";
 
 interface Message {
   role: "user" | "assistant";
@@ -116,10 +117,10 @@ const Chatbot: React.FC = () => {
     <div className="flex flex-col h-screen bg-background">
       {/* Header */}
       <div className="fixed w-full top-0 flex items-center p-4 bg-background xl:bg-transparent">
-        <div className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-2">
           <BotIcon className="w-6 h-6" />
           <h1 className="text-xl">Ask Juree</h1>
-        </div>
+        </Link>
       </div>
 
       <div className="h-dvh flex flex-col">
