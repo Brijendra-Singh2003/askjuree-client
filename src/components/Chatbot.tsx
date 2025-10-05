@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Send, Bot, Loader2, BotIcon } from "lucide-react";
+import { Send, Loader2, GraduationCapIcon } from "lucide-react";
 // import ReactMarkdown from "react-markdown";
 // import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -118,7 +118,7 @@ const Chatbot: React.FC = () => {
       {/* Header */}
       <div className="fixed w-full top-0 flex items-center p-4 bg-background xl:bg-transparent">
         <Link href="/" className="flex items-center space-x-2">
-          <BotIcon className="w-6 h-6" />
+          <GraduationCapIcon className="w-6 h-6" />
           <h1 className="text-xl">Ask Juree</h1>
         </Link>
       </div>
@@ -129,7 +129,7 @@ const Chatbot: React.FC = () => {
           <div className="max-w-3xl mx-auto pt-20 px-4 pb-4 space-y-2">
             {messages.length === 0 && (
               <div className="text-center text-muted-foreground mt-8">
-                <Bot className="w-12 h-12 mx-auto mb-4" />
+                <GraduationCapIcon className="w-12 h-12 mx-auto mb-4" />
                 <p className="text-lg font-medium mb-2">Welcome to Ask Juree</p>
                 <p>Your Leagal AI Assistant!</p>
               </div>

@@ -1,12 +1,19 @@
-import { ArrowUpRightIcon, BotIcon, DockIcon } from "lucide-react";
+import {
+  ArrowUpRightIcon,
+  BotIcon,
+  DockIcon,
+  GraduationCapIcon,
+} from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 const Home: React.FC = () => {
   return (
-    <div className="container max-w-4xl mx-auto flex flex-col p-6 space-y-4">
+    <div className="container max-w-4xl mx-auto flex flex-col py-6 lg:py-8 space-y-4">
       <div className="text-center p-6 space-y-2">
-        <h1 className="text-4xl font-semibold tracking-wider">Ask Jury</h1>
+        <h1 className="text-4xl font-semibold tracking-wider flex flex-col items-center justify-center">
+          <GraduationCapIcon className="size-12" /> Ask Jury
+        </h1>
         <p className="">Your leagal assistant</p>
       </div>
 
@@ -64,7 +71,10 @@ const Card: React.FC<{
   href?: string;
 }> = ({ Icon, title, description, href = "/" }) => {
   return (
-    <Link href={href} className="p-3 max-w-96 sm:max-w-none mx-auto flex items-start gap-3 rounded-lg bg-card text-card-foreground border shadow-md">
+    <Link
+      href={href}
+      className="p-3 max-w-96 sm:max-w-none mx-auto flex items-start gap-3 rounded-lg bg-card text-card-foreground border shadow-md"
+    >
       <div className="bg-muted p-3 rounded-full">
         {<Icon className="size-7" />}
       </div>

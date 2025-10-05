@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { CheckIcon, Edit3Icon, FileSearch2Icon, InfoIcon, Loader2Icon, TrendingUpIcon, TriangleAlertIcon, UploadCloud } from "lucide-react";
+import { CheckIcon, Edit3Icon, FileSearch2Icon, GraduationCapIcon, InfoIcon, Loader2Icon, TrendingUpIcon, TriangleAlertIcon, UploadCloud } from "lucide-react";
 import { API_URL } from "@/lib/constants";
+import Link from "next/link";
 
 interface IApiResponse {
   good_policies?: string[];
@@ -65,9 +66,16 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flexc justify-center">
-      <div className="p-4 lg:p-8 w-full max-w-4xl rounded-2xl">
+      <div className="fixed w-full top-0 flex items-center p-4 bg-background xl:bg-transparent">
+        <Link href="/" className="flex items-center space-x-2">
+          <GraduationCapIcon className="w-6 h-6" />
+          <h1 className="text-xl">Ask Juree</h1>
+        </Link>
+      </div>
+
+      <div className="p-4 lg:p-8 w-full max-w-4xl rounded-2xl mt-10">
         <div className="p-4">
-          <h3 className="p-2 text-center text-2xl md:text-3xl">
+          <h3 className="p-2 text-center text-2xl">
             Upload Your Offer Letter
           </h3>
         </div>
