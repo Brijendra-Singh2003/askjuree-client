@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, BotIcon } from "lucide-react";
+import { ArrowUpRightIcon, BotIcon, DockIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -12,9 +12,10 @@ const Home: React.FC = () => {
 
       <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         <Card
-          Icon={BotIcon}
-          title="Review a document"
-          description="Find any hidden policy that may lead to exploitation."
+          Icon={DockIcon}
+          title="Review your offer letter"
+          description="Analyze job offer or employment policy documents from Ask Jury."
+          href="/review-offer-letter"
         />
         <Card
           Icon={BotIcon}
@@ -60,9 +61,10 @@ const Card: React.FC<{
   Icon: React.FC<{ className: string }>;
   title: string;
   description: string;
-}> = ({ Icon, title, description }) => {
+  href?: string;
+}> = ({ Icon, title, description, href = "/" }) => {
   return (
-    <div className="p-3 max-w-96 sm:max-w-none mx-auto flex items-start gap-3 rounded-lg bg-card text-card-foreground border shadow-md">
+    <Link href={href} className="p-3 max-w-96 sm:max-w-none mx-auto flex items-start gap-3 rounded-lg bg-card text-card-foreground border shadow-md">
       <div className="bg-muted p-3 rounded-full">
         {<Icon className="size-7" />}
       </div>
@@ -70,7 +72,7 @@ const Card: React.FC<{
         <h3 className="font-semibold">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

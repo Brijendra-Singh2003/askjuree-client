@@ -1,4 +1,4 @@
-import { BACKEND_URL } from "@/lib/constants";
+import { API_URL } from "@/lib/constants";
 
 export const sendMessage = async (
     messages: Array<{ role: "user" | "assistant", content: string }>, 
@@ -6,7 +6,7 @@ export const sendMessage = async (
     onComplete: () => void
 ) => {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/stream`, {
+        const response = await fetch(`${API_URL}/api/stream`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
