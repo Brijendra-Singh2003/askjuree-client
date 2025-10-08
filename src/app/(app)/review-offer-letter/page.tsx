@@ -1,9 +1,17 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { CheckIcon, Edit3Icon, FileSearch2Icon, GraduationCapIcon, InfoIcon, Loader2Icon, TrendingUpIcon, TriangleAlertIcon, UploadCloud } from "lucide-react";
+import {
+  CheckIcon,
+  Edit3Icon,
+  FileSearch2Icon,
+  InfoIcon,
+  Loader2Icon,
+  TrendingUpIcon,
+  TriangleAlertIcon,
+  UploadCloud,
+} from "lucide-react";
 import { API_URL } from "@/lib/constants";
-import Link from "next/link";
 
 interface IApiResponse {
   good_policies?: string[];
@@ -66,18 +74,9 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flexc justify-center">
-      <div className="fixed w-full top-0 flex items-center p-4 bg-background xl:bg-transparent">
-        <Link href="/" className="flex items-center space-x-2">
-          <GraduationCapIcon className="w-6 h-6" />
-          <h1 className="text-xl">Ask Juree</h1>
-        </Link>
-      </div>
-
       <div className="p-4 lg:p-8 w-full max-w-4xl rounded-2xl mt-10">
         <div className="p-4">
-          <h3 className="p-2 text-center text-2xl">
-            Upload Your Offer Letter
-          </h3>
+          <h3 className="p-2 text-center text-2xl">Upload Your Offer Letter</h3>
         </div>
 
         <div>
@@ -136,75 +135,77 @@ export default function Page() {
           </button>
         </div>
 
-          {/* Response Section */}
-          {response && (
-            <div id="response-section" className="bg-popover shadow-xl my-16 px-4 py-8 rounded-2xl space-y-4 text-left">
-              {response.error && (
-                <div className="p-4 bg-red-100 text-red-800 rounded-lg">
-                  <h4 className="font-semibold mb-1">Error</h4>
-                  <p>{response.error}</p>
-                </div>
-              )}
+        {/* Response Section */}
+        {response && (
+          <div
+            id="response-section"
+            className="bg-popover shadow-xl my-16 px-4 py-8 rounded-2xl space-y-4 text-left"
+          >
+            {response.error && (
+              <div className="p-4 bg-red-100 text-red-800 rounded-lg">
+                <h4 className="font-semibold mb-1">Error</h4>
+                <p>{response.error}</p>
+              </div>
+            )}
 
-              {response.good_policies && response.good_policies?.length > 0 && (
-                <Section items={response.good_policies}
-                className="">
-                  <span className="flex items-center gap-4"><CheckIcon /> Good Policies</span>
+            {response.good_policies && response.good_policies?.length > 0 && (
+              <Section items={response.good_policies} className="">
+                <span className="flex items-center gap-4">
+                  <CheckIcon /> Good Policies
+                </span>
+              </Section>
+            )}
+
+            {response.policies_to_negotiate &&
+              response.policies_to_negotiate?.length > 0 && (
+                <Section items={response.policies_to_negotiate}>
+                  <Edit3Icon className="p-0.5" /> Policies to Negotiate
                 </Section>
               )}
 
-              {response.policies_to_negotiate &&
-                response.policies_to_negotiate?.length > 0 && (
-                  <Section items={response.policies_to_negotiate}>
-                    <Edit3Icon className="p-0.5" /> Policies to Negotiate
-                  </Section>
-                )}
+            {response.red_flags && response.red_flags?.length > 0 && (
+              <Section items={response.red_flags}>
+                <TriangleAlertIcon />
+                Red Flags
+              </Section>
+            )}
 
-              {response.red_flags && response.red_flags?.length > 0 && (
-                <Section items={response.red_flags}>
-                    <TriangleAlertIcon />
-                    Red Flags
+            {response.missing_benefits_or_points_of_concern &&
+              response.missing_benefits_or_points_of_concern?.length > 0 && (
+                <Section items={response.missing_benefits_or_points_of_concern}>
+                  <InfoIcon />
+                  Missing Benefits or Points of Concern
                 </Section>
               )}
 
-              {response.missing_benefits_or_points_of_concern &&
-                response.missing_benefits_or_points_of_concern?.length > 0 && (
-                  <Section
-                    items={response.missing_benefits_or_points_of_concern}
-                  >
-                    <InfoIcon />
-                    Missing Benefits or Points of Concern
-                  </Section>
-                )}
-
-              {response.career_growth_opportunities &&
-                response.career_growth_opportunities?.length > 0 && (
-                  <Section items={response.career_growth_opportunities}>
-                    <TrendingUpIcon />
-                    Career Growth Opportunities
-                  </Section>
-                )}
-
-              {response.work_life_balance_insights &&
-                response.work_life_balance_insights?.length > 0 && (
-                  <Section items={response.work_life_balance_insights}>
-                    Work-Life Balance Insights
-                  </Section>
-                )}
-
-              {response.final_conclusion && (
-                <div className="p-4">
-                  <h4 className="font-semibold mb-2 text-primary text-lg flex items-center gap-4 p-2">
-                    <FileSearch2Icon />
-                    Final Conclusion
-                  </h4>
-                  <p className="leading-relaxed px-2">
-                    {response.final_conclusion}
-                  </p>
-                </div>
+            {response.career_growth_opportunities &&
+              response.career_growth_opportunities?.length > 0 && (
+                <Section items={response.career_growth_opportunities}>
+                  <TrendingUpIcon />
+                  Career Growth Opportunities
+                </Section>
               )}
-            </div>
-          )}
+
+            {response.work_life_balance_insights &&
+              response.work_life_balance_insights?.length > 0 && (
+                <Section items={response.work_life_balance_insights}>
+                  Work-Life Balance Insights
+                </Section>
+              )}
+
+            {response.final_conclusion && (
+              <div className="p-4">
+                <h4 className="font-semibold mb-2 text-primary text-lg flex items-center gap-4 p-2">
+                  <FileSearch2Icon />
+                  Final Conclusion
+                </h4>
+                <p className="leading-relaxed px-2">
+                  {response.final_conclusion}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -221,7 +222,9 @@ function Section({
 }) {
   return (
     <div className={`p-4 rounded-lg ${className}`}>
-      <h4 className="p-2 text-lg font-semibold mb-2 flex items-center gap-4">{children}</h4>
+      <h4 className="p-2 text-lg font-semibold mb-2 flex items-center gap-4">
+        {children}
+      </h4>
       <ul className="px-8 list-disc list-inside space-y-1 leading-relaxed">
         {items.map((item, i) => (
           <li key={i}>{item}</li>
